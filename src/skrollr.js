@@ -1394,6 +1394,14 @@
 	 */
 	skrollr.setStyle = function(el, prop, val) {
 		var style = el.style;
+		
+		if(prop === 'transform' && val.match(/translate/)) {
+			if ( !$('html').hasClass('msie9') ){
+				// Extract values
+				matches = val.match(/translate\((-?\d+(%|px)).+(-?\d+(%|px))\)/);
+				val = 'translate3d(' + matches[1] + ',' + matches[3] + ',0);';
+			}
+		}
 
 		//Camel case.
 		prop = prop.replace(rxCamelCase, rxCamelCaseFn).replace('-', '');
