@@ -1396,7 +1396,7 @@
 		var style = el.style;
 		
 		if(prop === 'transform' && val.match(/translate/)) {
-			if ( !$('html').hasClass('msie9') ){
+			if ( _translateZ ){
 				// Extract values
 				matches = val.match(/translate\((-?\d+(%|px)).+(-?\d+(%|px))\)/);
 				val = 'translate3d(' + matches[1] + ',' + matches[3] + ',0);';
