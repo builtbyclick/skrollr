@@ -277,14 +277,19 @@
 		_isMobile = ((options.mobileCheck || function() {
 			return (/Android|iPhone|iPad|iPod|BlackBerry/i).test(navigator.userAgent || navigator.vendor || window.opera);
 		})());
+		
+    _skrollrBody = document.getElementById(options.skrollrBody || DEFAULT_MOBILE_DECELERATION);
+    if(_skrollrBody) {
+     _detect3DTransforms();
+    }
 
 		if(_isMobile) {
-			_skrollrBody = document.getElementById(options.skrollrBody || DEFAULT_SKROLLRBODY);
-
-			//Detect 3d transform if there's a skrollr-body (only needed for #skrollr-body).
-			if(_skrollrBody) {
-				_detect3DTransforms();
-			}
+      // _skrollrBody = document.getElementById(options.skrollrBody || DEFAULT_MOBILE_DECELERATION);
+      // 
+      // // Detect 3d transform if there's a skrollr-body (only needed for #skrollr-body).
+      // if(_skrollrBody) {
+      //  _detect3DTransforms();
+      // }
 
 			_initMobile();
 			_updateClass(documentElement, [SKROLLR_CLASS, SKROLLR_MOBILE_CLASS], [NO_SKROLLR_CLASS]);
@@ -1394,14 +1399,14 @@
 	 */
 	skrollr.setStyle = function(el, prop, val) {
 		var style = el.style;
-		
-		if(prop === 'transform' && val.match(/translate/)) {
-			if ( _translateZ ){
-				// Extract values
-				matches = val.match(/translate\((-?\d+(\.\d+)?(%|px)?),\s*(-?\d+(\.\d+)?(%|px)?)\)/);
-				val = 'translate3d(' + matches[1] + ',' + matches[4] + ',0);';
-			}
-		}
+
+    if(prop === 'transform' && val.match(/translate\(/)) {
+        if ( _translateZ ){
+          // Extract values
+          var matches = val.match(/translate\((-?\d+(\.\d+)?(%|px)?),\s*(-?\d+(\.\d+)?(%|px)?)\)/);
+          val = 'translate3d(' + matches[1] + ',' + matches[4] + ',0)';
+        }
+    }
 
 		//Camel case.
 		prop = prop.replace(rxCamelCase, rxCamelCaseFn).replace('-', '');
