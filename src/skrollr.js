@@ -1398,8 +1398,8 @@
 		if(prop === 'transform' && val.match(/translate/)) {
 			if ( _translateZ ){
 				// Extract values
-				matches = val.match(/translate\((-?\d+(%|px)).+(-?\d+(%|px))\)/);
-				val = 'translate3d(' + matches[1] + ',' + matches[3] + ',0);';
+				matches = val.match(/translate\((-?\d+(\.\d+)?(%|px)?),\s*(-?\d+(\.\d+)?(%|px)?)\)/);
+				val = 'translate3d(' + matches[1] + ',' + matches[4] + ',0);';
 			}
 		}
 
